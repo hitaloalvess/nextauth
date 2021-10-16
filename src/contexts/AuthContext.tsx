@@ -1,6 +1,7 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { api } from "../services/api";
 import Router from 'next/router';
+import { setCookie, parseCookies } from 'nookies';
 
 type User = {
     email: string;
@@ -30,6 +31,18 @@ export function AuthProvider( { children }  : AuthProviderProps){
     const [user, setUser] = useState<User>();
     const isAuthenticated = !!user;
 
+    useEffect( () => { //Armazena os dados do usuário toda vez que ele entrar na página
+        const { 'nextauth.token' : token } = parseCookies()
+
+        if(token){
+            api.get<any>('/me').then( response => {
+                const { email, permissions, roles } = response.data
+
+                setUser({email, permissions, roles})
+            })
+        }
+    }, [])
+
     async function signIn({email, password}){
 
         
@@ -38,13 +51,28 @@ export function AuthProvider( { children }  : AuthProviderProps){
                 email, password
             });
 
-            const { permissions, roles } = response.data;
+            const { token, refreshToken ,permissions, roles } = response.data;
 
+            //Armazena o token e refresh token do usuário
+            setCookie(undefined, 'nextauth.token', token, {
+                maxAge: 60 * 60 * 24 * 30, // 30 days
+                path: '/'
+            })
+
+            setCookie(undefined, 'nextauth.refreshToken', refreshToken, {
+                maxAge: 60 * 60 * 24 * 30, // 30 days
+                path: '/'
+            })
+
+            //Salva os dados do usuário
             setUser({
                 email,
                 permissions,
                 roles
             })
+
+            //Atualiza o token passado no cabeçalho das requisições
+            api.defaults.headers['Authorization'] = `Bearer ${token}` 
 
             Router.push('/dashboard');
 
