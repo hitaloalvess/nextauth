@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { api } from "../services/api";
 import Router from 'next/router';
-import { setCookie, parseCookies } from 'nookies';
+import { setCookie, parseCookies, destroyCookie } from 'nookies';
 
 type User = {
     email: string;
@@ -26,6 +26,12 @@ interface AuthProviderProps{
 
 const AuthContext = createContext({} as AuthContextData);
 
+export function signOut(){ //desloga o usuário
+    destroyCookie(undefined, 'nextauth.token');
+    destroyCookie(undefined, 'nextauth.refreshToken');
+
+    Router.push('/')
+}
 export function AuthProvider( { children }  : AuthProviderProps){
 
     const [user, setUser] = useState<User>();
@@ -35,10 +41,14 @@ export function AuthProvider( { children }  : AuthProviderProps){
         const { 'nextauth.token' : token } = parseCookies()
 
         if(token){
-            api.get<any>('/me').then( response => {
+            api.get<any>('/me')
+            .then( response => {
                 const { email, permissions, roles } = response.data
 
                 setUser({email, permissions, roles})
+            })
+            .catch(() => {//Se cair aqui, quer dizer que provavelmente o token não é mais válido
+                signOut();
             })
         }
     }, [])
