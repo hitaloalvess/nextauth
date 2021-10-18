@@ -1,12 +1,13 @@
 import axios, { AxiosError } from 'axios';
 import { parseCookies, setCookie } from 'nookies';
 import { signOut } from '../contexts/AuthContext';
+import { AuthTokenError } from '../errors/AuthTokenError';
 
 
 let isRefreshing = false;
 let failedRequestsQueue = [];
 
-export function apiClient(context = undefined){
+export function setupAPIClient(context = undefined){
     let cookies = parseCookies(context);
 
     const api = axios.create({
@@ -79,9 +80,10 @@ export function apiClient(context = undefined){
                 })
             }else{//Cai aqui quando da algum erro de não autorizado , que não seja token expirado
     
-                //desloga o usuário
-                if(process.browser){
+                if(process.browser){//se estiver pelo lado do browser e der erro, desloga o usuário
                     signOut();
+                }else{//se estiver pelo lado do servidor retorna o erro
+                    return Promise.reject(new AuthTokenError());
                 }
             }
         }
