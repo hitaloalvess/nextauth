@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../hooks/useAuth";
 import { withSSRGuest } from "../utils/withSSRGuest";
 export default function Home(){
 

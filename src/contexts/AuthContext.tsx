@@ -16,6 +16,7 @@ interface SignInCredentials{
 
 type AuthContextData = {
     signIn: (credentials : SignInCredentials) => Promise<void>;
+    signOut: () => void;
     user: User;
     isAuthenticated: boolean;
 }
@@ -24,18 +25,34 @@ interface AuthProviderProps{
     children: ReactNode;
 }
 
-const AuthContext = createContext({} as AuthContextData);
+export const AuthContext = createContext({} as AuthContextData);
+let authChannel : BroadcastChannel;
 
 export function signOut(){ //desloga o usuário
     destroyCookie(undefined, 'nextauth.token');
     destroyCookie(undefined, 'nextauth.refreshToken');
 
+    authChannel.postMessage('signOut');
     Router.push('/')
 }
 export function AuthProvider( { children }  : AuthProviderProps){
 
     const [user, setUser] = useState<User>();
     const isAuthenticated = !!user;
+
+    useEffect(() => {
+        authChannel = new BroadcastChannel('auth');//utilizado para comunicacao entre abas
+
+        authChannel.onmessage = (message) => {//escuta a mensagem
+            switch(message.data){
+                case 'signOut':
+                        signOut();
+                    break;
+                default:
+                    break;
+            }
+        }
+    }, []);
 
     useEffect( () => { //Armazena os dados do usuário toda vez que ele entrar na página
         const { 'nextauth.token' : token } = parseCookies()
@@ -92,10 +109,8 @@ export function AuthProvider( { children }  : AuthProviderProps){
     }
 
     return (
-        <AuthContext.Provider value={{isAuthenticated, signIn, user }}>
+        <AuthContext.Provider value={{isAuthenticated, signIn, signOut, user }}>
             {children}
         </AuthContext.Provider>
     )
 }
-
-export const useAuth = () => useContext(AuthContext);

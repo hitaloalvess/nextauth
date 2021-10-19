@@ -1,5 +1,6 @@
 import { useEffect } from "react"
-import { useAuth } from "../contexts/AuthContext"
+import Can from "../components/Can"
+import { useAuth } from "../hooks/useAuth"
 import { setupAPIClient } from "../services/api"
 import { api } from "../services/apiClient"
 import { withSSRAuth } from "../utils/withSSRAuth"
@@ -8,7 +9,7 @@ import { withSSRAuth } from "../utils/withSSRAuth"
 
 export default function Dashboard(){
 
-    const { user } = useAuth()
+    const { user, signOut } = useAuth()
 
     useEffect(() => {
         api.get<any>('/me')
@@ -16,7 +17,15 @@ export default function Dashboard(){
         .catch( error => console.log(error))
     }, [])
     
-    return <h1>Dashboard: {`${user?.email}`}</h1>
+    return (
+        <>
+            <h1>Dashboard: {`${user?.email}`}</h1>
+            <Can permissions={['metrics.list']}>
+                <div>Métricas</div>
+            </Can>
+            <button onClick={signOut}>SignOut</button>
+        </>
+    )
 }
 
 export const getServerSideProps = withSSRAuth( async(context) => {
