@@ -1,0 +1,41 @@
+.container{
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.image{
+    height: 100vh;
+    img{
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.signIn{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    form{
+        display: flex;
+        flex-direction: column;
+        width: 40rem;
+        h1{
+            font-size: 3.6rem;
+            font-weight: bold;
+            margin-bottom: 6.4rem;
+            color: var(--white);
+        }
+
+        div + div{
+            margin-top: 0.8rem;
+        }
+
+        button{
+            margin-top: 2.4rem;
+        }
+    }
+}

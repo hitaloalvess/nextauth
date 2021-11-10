@@ -1,0 +1,29 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --background: #312E38;
+    --background-inputs: #232129;
+    --white: #F4EDE8;
+    --grey-light: #666360;
+    --orange: #F25D27;
+}
+
+html{
+    font-size: 62.5%;
+}
+
+body{
+    background-color: var(--background);
+}
+
+body, button, textarea, input, select{
+    font: 400 1.6rem 'Roboto Slab',sans-serif;
+}
+
+button{
+    cursor: pointer;
+}

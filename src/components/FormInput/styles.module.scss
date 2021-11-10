@@ -1,0 +1,30 @@
+.formInput{
+    position: relative;
+    border-radius: 8px;
+    
+    input{
+        width: 100%;
+        padding: 2rem 5rem; 
+        border-radius: inherit;
+        border: none;
+        outline: none;
+        font-size: 1.6rem;
+        font-weight: 500;
+        color: var(--white);
+        background-color: var(--background-inputs);
+
+        &::placeholder{
+            font-style: italic;
+            font-weight: 500;   
+        }
+    }
+
+    svg{
+        position: absolute;
+        top: 2rem;
+        left: 1.6rem;
+        width: 2rem;
+        height: 2rem;
+        color: var( --grey-light);
+    }
+}
