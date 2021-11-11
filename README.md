@@ -3,9 +3,10 @@
 </h1>
 
 <h2 align="center"> 
-<img alt="GitHub language count" src="https://img.shields.io/github/languages/count/hitaloalvess/nextauth">
+/*<img alt="GitHub language count" src="https://img.shields.io/github/languages/count/hitaloalvess/nextauth">*/
 <img alt="GitHub language count" src="https://img.shields.io/github/languages/top/hitaloalvess/nextauth">
 <img alt="GitHub language count" src="https://img.shields.io/github/repo-size/hitaloalvess/nextauth">
+/*<img alt="GitHub language count" src="https://img.shields.io/github/license/isaiasnhantumbo/nextauth">*/
 </h2>
 
 <h2 align="center">
