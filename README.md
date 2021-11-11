@@ -8,7 +8,7 @@
 <img alt="GitHub language count" src="https://img.shields.io/github/repo-size/hitaloalvess/nextauth">
 </h2>
 
-<div align="center">
+<h2 align="center">
      <div>
         <p>Web</p>
         <img src=".github/login-web.PNG" alt="tela login web demo" />
@@ -17,13 +17,13 @@
         <p>Mobile</p>
         <img src=".github/login-mobile.PNG" alt="tela login mobile demo" />
      </div>
-</div>
+</h2>
 
-<h2 align="center">
+<p align="center">
   <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-como-usar?">Como usar?</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</h2>
+</p>
 
 ## 🛠 Tecnologias 🚀
 
