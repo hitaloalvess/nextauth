@@ -4,12 +4,17 @@
     border-radius: 8px;
     font-size: 2rem;
     font-weight: bold;
-    line-height: 3.2rem;
     color: var(--white);
     background-color: var(--orange);
     transition: filter .2s ease-in-out;
 
     &:hover{
         filter: brightness(0.9);
+    }
+}
+
+@media (max-width: 768px) {
+    .formButton{
+        font-size: 1.6rem;
     }
 }
